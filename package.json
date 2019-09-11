@@ -1,0 +1,24 @@
+{
+  "name": "circleci-action",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "ncc build lib/index.js",
+    "test": "prettier --check **/*.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.1.0",
+    "@actions/github": "^1.1.0",
+    "axios": "^0.19.0",
+    "js-yaml": "^3.13.1",
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "@zeit/ncc": "^0.20.5",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  }
+}

@@ -1,0 +1,19 @@
+name: 'Trigger CircleCI workflows'
+description: 'Trigger CircleCI workflows based on changed paths'
+inputs:
+  circleci_token:
+    description: 'CircleCI token'
+    required: true
+  github_token:
+    description: 'GitHub token'
+    required: true
+  configuration_path:
+    description: 'The path for the workflows/path configurations'
+    default: '.github/circle_workflows.yml'
+    required: false
+outputs:
+  pipeline_id:
+    description: 'The ID of the generated pipeline'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
