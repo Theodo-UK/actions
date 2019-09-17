@@ -1,4 +1,4 @@
-name: "CI"
+name: "CI / CircleCI Workflow"
 on: [push]
 
 jobs:
@@ -9,9 +9,11 @@ jobs:
 
     - name: Install dependencies
       run: yarn install
+      working-directory: ./circleci-workflow
 
     - name: Run test
       run: yarn test
+      working-directory: ./circleci-workflow
 
   build:
     runs-on: ubuntu-latest
@@ -20,6 +22,8 @@ jobs:
 
     - name: Install dependencies
       run: yarn install
+      working-directory: ./circleci-workflow
 
     - name: Run test
       run: yarn build
+      working-directory: ./circleci-workflow

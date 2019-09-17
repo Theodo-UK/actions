@@ -1,4 +1,4 @@
-# circleci-action
+# CircleCI Workflow action
 
 An action to start a CircleCI workflows based on files changed.
 Useful for monorepos with several codebases.
