@@ -5,6 +5,7 @@
   "author": "Theodo <contact@theodo.co.uk>",
   "private": true,
   "workspaces": [
+    "automerge",
     "circleci-workflow"
   ],
   "dependencies": {

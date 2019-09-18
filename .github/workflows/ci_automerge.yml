@@ -1,0 +1,27 @@
+name: "CI / Automerge"
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run test
+      run: yarn test
+      working-directory: ./automerge
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run test
+      run: yarn build
+      working-directory: ./automerge
