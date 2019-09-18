@@ -1,17 +1,18 @@
 {
-  "name": "automerge-action",
+  "name": "utils",
   "version": "0.1.0",
-  "main": "src/index.js",
+  "description": "Action utils",
+  "main": "src/index.ts",
+  "author": "Theodo <contact@theodo.co.uk>",
   "license": "MIT",
+  "private": true,
   "scripts": {
-    "prebuild": "tsc",
-    "build": "ncc build lib/index.js",
     "pretest": "eslint . --ext .ts",
     "test": "prettier --check **/*.ts"
   },
   "dependencies": {
-    "@actions/core": "^1.1.1",
+    "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
-    "utils": "0.1.0"
+    "js-yaml": "^3.13.1"
   }
 }

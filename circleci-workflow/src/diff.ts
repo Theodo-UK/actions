@@ -1,39 +1,15 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import * as yaml from "js-yaml";
+import { getClient, getConfig, getPullRequest } from "utils";
 import { Minimatch } from "minimatch";
 
-async function getConfig(client: github.GitHub, sha: string): Promise<any> {
-  const configPath = core.getInput("configuration_path", { required: true });
-
-  const response = await client.repos.getContents({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    path: configPath,
-    ref: sha
-  });
-
-  const configContent = Buffer.from(response.data.content, "base64").toString();
-  const configObject: any = yaml.safeLoad(configContent);
-
-  return configObject;
-}
-
-function getPrNumber(): number {
-  const pullRequest = github.context.payload.pull_request;
-  if (!pullRequest) {
-    core.setFailed("Could not find a PR number.");
-    throw new Error("could not find PR number");
-  }
-
-  return pullRequest.number;
-}
+type Config = Record<string, string[]>;
 
 async function getChangedFiles(client: github.GitHub): Promise<string[]> {
   const listFilesResponse = await client.pulls.listFiles({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
-    pull_number: getPrNumber()
+    pull_number: getPullRequest().number
   });
 
   const changedFiles = listFilesResponse.data.map(f => f.filename);
@@ -62,11 +38,11 @@ function checkGlobs(changedFiles: string[], globs: string[]): boolean {
 }
 
 export async function getParameters(sha: string): Promise<object> {
-  const githubToken = core.getInput("github_token", { required: true });
-  const client = new github.GitHub(githubToken);
+  const configPath = core.getInput("configuration_path", { required: true });
+  const client = getClient();
 
   const [config, changedFiles] = await Promise.all([
-    getConfig(client, sha),
+    getConfig<Config>(client, sha, configPath),
     getChangedFiles(client)
   ]);
 

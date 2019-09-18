@@ -1,7 +1,8 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { getConfig } from "./config";
+import { getClient, getConfig } from "utils";
 import { applyRules } from "./rules";
+import { Config } from "./types";
 
 async function run() {
   const checkRun = github.context.payload.check_run;
@@ -27,10 +28,14 @@ async function run() {
     process.exit(1);
   }
   const pullRequest = checkRun.pull_requests[0];
-  const githubToken = core.getInput("github_token", { required: true });
-  const client = new github.GitHub(githubToken);
+  const client = getClient();
 
-  const config = await getConfig(client, pullRequest.head.sha);
+  const configPath = core.getInput("configuration_path", { required: true });
+  const config = await getConfig<Config>(
+    client,
+    pullRequest.head.sha,
+    configPath
+  );
   await applyRules(config, pullRequest, client, checkRun.head_sha);
 }
 

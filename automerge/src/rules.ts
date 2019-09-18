@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { ConditionType, Rule, Config } from "./config"; // eslint-disable-line
+import { ConditionType, Rule, Config } from "./types"; // eslint-disable-line
 
 async function conditionApplies(
   type: ConditionType,

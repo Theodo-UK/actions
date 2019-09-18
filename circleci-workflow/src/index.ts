@@ -1,24 +1,11 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { getPullRequest } from "utils";
 import * as circleci from "./circleci";
 import { getParameters } from "./diff";
 
-function getPullRequest() {
-  const pullRequest = github.context.payload.pull_request;
-  if (!pullRequest) {
-    core.setFailed("Could not find a PR.");
-    throw new Error("could not find PR");
-  }
-
-  return pullRequest;
-}
-
 async function run() {
   const pullRequest = getPullRequest();
-  if (!pullRequest) {
-    core.setFailed("Could not find a PR number.");
-    throw new Error("could not find PR number");
-  }
 
   const token = core.getInput("circleci_token", { required: true });
 
