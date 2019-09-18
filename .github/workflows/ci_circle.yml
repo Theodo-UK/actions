@@ -9,7 +9,6 @@ jobs:
 
     - name: Install dependencies
       run: yarn install
-      working-directory: ./circleci-workflow
 
     - name: Run test
       run: yarn test
@@ -22,7 +21,6 @@ jobs:
 
     - name: Install dependencies
       run: yarn install
-      working-directory: ./circleci-workflow
 
     - name: Run test
       run: yarn build

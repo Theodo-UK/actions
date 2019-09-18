@@ -1,0 +1,23 @@
+{
+  "name": "theodo-actions",
+  "version": "0.1.0",
+  "repository": "git@github.com:Theodo-UK/circleci-action.git",
+  "author": "Theodo <contact@theodo.co.uk>",
+  "private": true,
+  "workspaces": [
+    "circleci-workflow"
+  ],
+  "dependencies": {
+    "@actions/core": "^1.1.0",
+    "@actions/github": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "@zeit/ncc": "^0.20.5",
+    "eslint": "^6.4.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  }
+}
