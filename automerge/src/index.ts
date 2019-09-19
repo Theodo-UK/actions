@@ -2,7 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { getClient, getConfig } from "utils";
 import { applyRules } from "./rules";
-import { Config } from "./types";
+import { Config } from "./types"; // eslint-disable-line
 
 async function run() {
   const checkRun = github.context.payload.check_run;
