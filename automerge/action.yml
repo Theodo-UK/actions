@@ -1,0 +1,16 @@
+name: 'Automerge'
+description: 'Automatically merge PRs when some criterias are met'
+inputs:
+  github_token:
+    description: 'GitHub token'
+    required: true
+  configuration_path:
+    description: 'The path for the automerge configurations'
+    default: '.github/automerge.yml'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: git-merge
+  color: green

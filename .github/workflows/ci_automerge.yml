@@ -1,4 +1,4 @@
-name: "CI"
+name: "CI / Automerge"
 on: [push]
 
 jobs:
@@ -12,6 +12,7 @@ jobs:
 
     - name: Run test
       run: yarn test
+      working-directory: ./automerge
 
   build:
     runs-on: ubuntu-latest
@@ -23,3 +24,4 @@ jobs:
 
     - name: Run test
       run: yarn build
+      working-directory: ./automerge

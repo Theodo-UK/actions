@@ -1,0 +1,17 @@
+{
+  "name": "automerge-action",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "ncc build lib/index.js",
+    "pretest": "eslint . --ext .ts",
+    "test": "prettier --check **/*.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.1.1",
+    "@actions/github": "^1.1.0",
+    "utils": "0.1.0"
+  }
+}

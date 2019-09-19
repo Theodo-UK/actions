@@ -1,27 +1,24 @@
 {
-  "name": "circleci-action",
+  "name": "theodo-actions",
   "version": "0.1.0",
-  "main": "src/index.js",
-  "license": "MIT",
-  "scripts": {
-    "prebuild": "tsc",
-    "build": "ncc build lib/index.js",
-    "pretest": "eslint . --ext .ts",
-    "test": "prettier --check **/*.ts"
-  },
+  "repository": "git@github.com:Theodo-UK/circleci-action.git",
+  "author": "Theodo <contact@theodo.co.uk>",
+  "private": true,
+  "workspaces": [
+    "automerge",
+    "circleci-workflow",
+    "utils"
+  ],
   "dependencies": {
     "@actions/core": "^1.1.0",
-    "@actions/github": "^1.1.0",
-    "axios": "^0.19.0",
-    "js-yaml": "^3.13.1",
-    "minimatch": "^3.0.4"
+    "@actions/github": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.5",
-    "@typescript-eslint/eslint-plugin": "^2.2.0",
-    "@typescript-eslint/parser": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
     "@zeit/ncc": "^0.20.5",
-    "eslint": "^6.3.0",
+    "eslint": "^6.4.0",
     "prettier": "^1.18.2",
     "typescript": "^3.6.3"
   }
