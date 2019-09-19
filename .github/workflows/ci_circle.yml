@@ -10,7 +10,7 @@ jobs:
     - name: Install dependencies
       run: yarn install
 
-    - name: Run test
+    - name: Run tests
       run: yarn test
       working-directory: ./circleci-workflow
 
@@ -22,6 +22,10 @@ jobs:
     - name: Install dependencies
       run: yarn install
 
-    - name: Run test
+    - name: Build
       run: yarn build
+      working-directory: ./circleci-workflow
+
+    - name: Check built artifact is up to date
+      run: git diff --exit-code ./dist/index.js
       working-directory: ./circleci-workflow
