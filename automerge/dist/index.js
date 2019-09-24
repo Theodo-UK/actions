@@ -15552,10 +15552,22 @@ function conditionApplies(type, value, pullRequest, client, sha) {
                     repo: github.context.repo.repo,
                     ref: sha
                 });
+                let inProgressIgnored = false;
                 return response.data.check_suites.every(suite => {
                     if (ignoredApps.includes(suite.app["slug"])) {
                         core.debug(`Status for ${suite.app.name}: ignored.`);
                         return true;
+                    }
+                    if (suite.status === "in_progress") {
+                        if (inProgressIgnored) {
+                            core.debug(`Status for ${suite.app.name}: "in_progress" -> AGAIN! KO`);
+                            return false;
+                        }
+                        else {
+                            inProgressIgnored = true;
+                            core.debug(`Status for ${suite.app.name}: "in_progress" -> ignoring`);
+                            return true;
+                        }
                     }
                     const res = suite.status === "completed" && suite.conclusion === conf.value;
                     core.debug(`Status for ${suite.app.name}: ${res ? "OK" : "KO"}`);
