@@ -15546,6 +15546,8 @@ function conditionApplies(type, value, pullRequest, client, sha) {
                     repo: github.context.repo.repo,
                     ref: sha
                 });
+                console.log(response);
+                core.debug(JSON.stringify(response));
                 return response.data.state === value;
             }
         }
