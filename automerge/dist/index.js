@@ -273,7 +273,10 @@ const rules_1 = __webpack_require__(975);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const checkSuite = github.context.payload.check_suite;
-        console.log(checkSuite);
+        console.log(process.env);
+        console.log(process.env.GITHUB_WORKFLOW);
+        console.log(process.env.GITHUB_ACTION);
+        console.log(process.env.GITHUB_EVENT_NAME);
         if (!checkSuite) {
             core.setFailed("Could not find a check run.");
             process.exit(1);
