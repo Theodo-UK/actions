@@ -15556,6 +15556,7 @@ function conditionApplies(type, value, pullRequest, client, sha) {
                     }
                     const res = suite.status === "completed" && suite.conclusion === conf.value;
                     core.debug(`Status for ${suite.app.name}: ${res ? "OK" : "KO"}`);
+                    return res;
                 });
             }
             default:
