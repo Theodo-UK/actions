@@ -15541,14 +15541,18 @@ function conditionApplies(type, value, pullRequest, client, sha) {
             case "base":
                 return pullRequest.base.ref === value;
             case "status": {
+                const conf = value;
+                const ignoredApps = conf.ignoredChecks || [];
                 const response = yield client.checks.listSuitesForRef({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
                     ref: sha
                 });
-                console.log(sha, response.data);
-                return false; //response.data.state === value;
+                return response.data.check_suites.every(suite => ignoredApps.includes(suite.app["slug"]) ||
+                    (suite.status === "completed" && suite.conclusion === conf.value));
             }
+            default:
+                return true;
         }
     });
 }

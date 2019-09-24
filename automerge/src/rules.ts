@@ -1,10 +1,10 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { ConditionType, Rule, Config } from "./types"; // eslint-disable-line
+import { Rule, RuleConditions, Config } from "./types"; // eslint-disable-line
 
-async function conditionApplies(
-  type: ConditionType,
-  value: string,
+async function conditionApplies<T extends keyof RuleConditions>(
+  type: T,
+  value: RuleConditions[T],
   pullRequest: any,
   client: github.GitHub,
   sha: string
@@ -21,14 +21,21 @@ async function conditionApplies(
     case "base":
       return pullRequest.base.ref === value;
     case "status": {
+      const conf = value as RuleConditions["status"];
+      const ignoredApps = conf.ignoredChecks || [];
       const response = await client.checks.listSuitesForRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         ref: sha
       });
-      console.log(sha, response.data);
-      return false; //response.data.state === value;
+      return response.data.check_suites.every(
+        suite =>
+          ignoredApps.includes(suite.app["slug"]) ||
+          (suite.status === "completed" && suite.conclusion === conf.value)
+      );
     }
+    default:
+      return true;
   }
 }
 
@@ -38,7 +45,9 @@ async function ruleApplies(
   client: github.GitHub,
   sha: string
 ): Promise<boolean> {
-  const conditionTypes = Object.keys(rule.conditions) as ConditionType[];
+  const conditionTypes = Object.keys(
+    rule.conditions
+  ) as (keyof RuleConditions)[];
   const results = await Promise.all(
     conditionTypes.map(conditionType =>
       conditionApplies(
