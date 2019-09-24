@@ -39,19 +39,18 @@ async function ruleApplies(
 ): Promise<boolean> {
   const conditionTypes = Object.keys(rule.conditions) as ConditionType[];
   const results = await Promise.all(
-    conditionTypes.map(conditionType => {
-      const result = conditionApplies(
+    conditionTypes.map(conditionType =>
+      conditionApplies(
         conditionType,
         rule.conditions[conditionType],
         pullRequest,
         client,
         sha
-      );
-      core.debug(
-        `Condition "${conditionType}" ${result ? "passes" : "fails"}.`
-      );
-      return result;
-    })
+      ).then(res => {
+        core.debug(`Condition "${conditionType}" ${res ? "passes" : "fails"}.`);
+        return res;
+      })
+    )
   );
   const result = results.every(x => !!x);
   core.debug(`Rule "${rule.name}" ${result ? "applies" : "doesn't apply"}.`);

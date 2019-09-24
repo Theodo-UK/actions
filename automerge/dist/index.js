@@ -15554,11 +15554,10 @@ function conditionApplies(type, value, pullRequest, client, sha) {
 function ruleApplies(rule, pullRequest, client, sha) {
     return __awaiter(this, void 0, void 0, function* () {
         const conditionTypes = Object.keys(rule.conditions);
-        const results = yield Promise.all(conditionTypes.map(conditionType => {
-            const result = conditionApplies(conditionType, rule.conditions[conditionType], pullRequest, client, sha);
-            core.debug(`Condition "${conditionType}" ${result ? "passes" : "fails"}.`);
-            return result;
-        }));
+        const results = yield Promise.all(conditionTypes.map(conditionType => conditionApplies(conditionType, rule.conditions[conditionType], pullRequest, client, sha).then(res => {
+            core.debug(`Condition "${conditionType}" ${res ? "passes" : "fails"}.`);
+            return res;
+        })));
         const result = results.every(x => !!x);
         core.debug(`Rule "${rule.name}" ${result ? "applies" : "doesn't apply"}.`);
         return result;
