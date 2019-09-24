@@ -272,32 +272,32 @@ const utils_1 = __webpack_require__(640);
 const rules_1 = __webpack_require__(975);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const checkRun = github.context.payload.check_run;
-        if (!checkRun) {
+        const checkSuite = github.context.payload.check_suite;
+        if (!checkSuite) {
             core.setFailed("Could not find a check run.");
             process.exit(1);
         }
-        if (checkRun.status !== "completed") {
+        if (checkSuite.status !== "completed") {
             core.warning("Check is still running");
             process.exit();
         }
-        if (checkRun.conclusion !== "success") {
+        if (checkSuite.conclusion !== "success") {
             core.warning("Check failed");
             process.exit();
         }
-        if (checkRun.pull_requests.length === 0) {
+        if (checkSuite.pull_requests.length === 0) {
             core.warning("No pull request to merge");
             process.exit();
         }
-        if (checkRun.pull_requests.length > 1) {
-            core.setFailed(`Found ${checkRun.pull_requests.length} pull requests.`);
+        if (checkSuite.pull_requests.length > 1) {
+            core.setFailed(`Found ${checkSuite.pull_requests.length} pull requests.`);
             process.exit(1);
         }
-        const pullRequest = checkRun.pull_requests[0];
+        const pullRequest = checkSuite.pull_requests[0];
         const client = utils_1.getClient();
         const configPath = core.getInput("configuration_path", { required: true });
         const config = yield utils_1.getConfig(client, pullRequest.head.sha, configPath);
-        yield rules_1.applyRules(config, pullRequest, client, checkRun.head_sha);
+        yield rules_1.applyRules(config, pullRequest, client, pullRequest.head.sha);
     });
 }
 run();
