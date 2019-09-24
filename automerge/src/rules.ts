@@ -21,14 +21,14 @@ async function conditionApplies(
     case "base":
       return pullRequest.base.ref === value;
     case "status": {
-      const response = await client.repos.getCombinedStatusForRef({
+      const response = await client.repos.listStatusesForRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         ref: sha
       });
-      console.log(response)
-      core.debug(JSON.stringify(response))
-      return response.data.state === value;
+      console.log(response.data);
+      core.debug(JSON.stringify(response.data));
+      return false; //response.data.state === value;
     }
   }
 }
