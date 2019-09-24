@@ -84,7 +84,7 @@ async function ruleApplies(
     )
   );
   const result = results.every(x => !!x);
-  core.debug(`Rule "${rule.name}" ${result ? "applies" : "doesn't apply"}.`);
+  console.log(`Rule "${rule.name}" ${result ? "applies" : "doesn't apply"}.`);
   return result;
 }
 
@@ -97,7 +97,7 @@ async function applyRule(rule: Rule, pullRequest: any, client: github.GitHub) {
           repo: github.context.repo.repo,
           pull_number: pullRequest.number
         });
-        core.debug(`Merging PR #${pullRequest.number} (rule "${rule.name}").`);
+        console.log(`Merging PR #${pullRequest.number} (rule "${rule.name}").`);
         break;
     }
   }
