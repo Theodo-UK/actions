@@ -28,11 +28,17 @@ async function conditionApplies<T extends keyof RuleConditions>(
         repo: github.context.repo.repo,
         ref: sha
       });
-      return response.data.check_suites.every(
-        suite =>
-          ignoredApps.includes(suite.app["slug"]) ||
-          (suite.status === "completed" && suite.conclusion === conf.value)
-      );
+      console.log(conf);
+      return response.data.check_suites.every(suite => {
+        if (ignoredApps.includes(suite.app["slug"])) {
+          core.debug(`Status for ${suite.app.name}: ignored.`);
+          return true;
+        }
+
+        const res =
+          suite.status === "completed" && suite.conclusion === conf.value;
+        core.debug(`Status for ${suite.app.name}: ${res ? "OK" : "KO"}`);
+      });
     }
     default:
       return true;
