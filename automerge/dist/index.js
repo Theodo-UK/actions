@@ -15541,7 +15541,7 @@ function conditionApplies(type, value, pullRequest, client, sha) {
             case "base":
                 return pullRequest.base.ref === value;
             case "status": {
-                const response = yield client.repos.listStatusesForRef({
+                const response = yield client.checks.listSuitesForRef({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
                     ref: sha

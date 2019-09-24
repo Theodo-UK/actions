@@ -21,7 +21,7 @@ async function conditionApplies(
     case "base":
       return pullRequest.base.ref === value;
     case "status": {
-      const response = await client.repos.listStatusesForRef({
+      const response = await client.checks.listSuitesForRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         ref: sha
