@@ -26,8 +26,7 @@ async function conditionApplies(
         repo: github.context.repo.repo,
         ref: sha
       });
-      console.log(response.data);
-      core.debug(JSON.stringify(response.data));
+      console.log(sha, response.data);
       return false; //response.data.state === value;
     }
   }
