@@ -273,6 +273,7 @@ const rules_1 = __webpack_require__(975);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const checkSuite = github.context.payload.check_suite;
+        console.log(checkSuite);
         if (!checkSuite) {
             core.setFailed("Could not find a check run.");
             process.exit(1);
@@ -15548,7 +15549,6 @@ function conditionApplies(type, value, pullRequest, client, sha) {
                     repo: github.context.repo.repo,
                     ref: sha
                 });
-                console.log(conf);
                 return response.data.check_suites.every(suite => {
                     if (ignoredApps.includes(suite.app["slug"])) {
                         core.debug(`Status for ${suite.app.name}: ignored.`);

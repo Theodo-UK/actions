@@ -7,6 +7,8 @@ import { Config } from "./types"; // eslint-disable-line
 async function run() {
   const checkSuite = github.context.payload.check_suite;
 
+  console.log(checkSuite);
+
   if (!checkSuite) {
     core.setFailed("Could not find a check run.");
     process.exit(1);

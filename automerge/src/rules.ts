@@ -28,7 +28,6 @@ async function conditionApplies<T extends keyof RuleConditions>(
         repo: github.context.repo.repo,
         ref: sha
       });
-      console.log(conf);
       return response.data.check_suites.every(suite => {
         if (ignoredApps.includes(suite.app["slug"])) {
           core.debug(`Status for ${suite.app.name}: ignored.`);
