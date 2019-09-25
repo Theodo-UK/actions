@@ -15536,6 +15536,7 @@ function conditionApplies(type, value, pullRequest, client, sha) {
                     repo: github.context.repo.repo,
                     pull_number: pullRequest.number
                 });
+                console.log(value, response.data);
                 return response.data.user.login === value;
             }
             case "base":
